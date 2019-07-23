@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Hind+Siliguri&display=swap');
+
+.ParentBox{
+  width: 300px;
+  margin: 15px;
+  border: 1px solid red;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.image{
+  width: 300px;
+  height: 200px;
+  min-width: 300px;
+  min-height: 200px;
+}
+
+.imageParent{
+}
+
+.title{
+  font-size: 25px;
+  text-align: center;
+  font-family: Quicksand;
+  font-weight: bold;
+}
+
+.description{
+  font-size: 14px;
+  font-family: Hind Siliguri;
+}
+
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.titleBox{
+  padding: 8px
+}
+
+.descriptionBox{
+  padding: 8px
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  flex-direction: column
+}
+
+.loaderImage{
+  width: 300px;
+  height: 300px;
+}

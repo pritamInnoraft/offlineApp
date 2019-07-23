@@ -1,31 +1,76 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { defaultAction } from './actions'
-
+import { fetchNews } from './actions'
+import NewsCard from '../../Components/NewsCard'
 class Homepage extends Component {
-  componentDidMount(){
-    console.log('ss',this.props)
-    this.props.decrement()
+
+  constructor(props){
+    super(props)
+    this.state = {
+      disconnected : false
+    }
   }
+
+  componentDidMount(){
+    this.props.fetchNews()
+    window.addEventListener('online', this.handleConnectionChange);
+    window.addEventListener('offline', this.handleConnectionChange);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('online', this.handleConnectionChange);
+    window.removeEventListener('offline', this.handleConnectionChange);
+  }
+
+  handleConnectionChange = () => {
+    const condition = navigator.onLine ? true : false;
+    this.setState({
+      disconnected : !condition
+    })
+  }
+
   render() {
+    if(!this.state.disconnected){
+      if(this.props.news){
+        return(
+          <div className={'container'}>
+            {this.props.news.map((data,key)=>(
+              <NewsCard data={data} key={key}/>
+            ))}
+          </div>
+        )
+      }
+    }
+    else{
+      return(
+        <div className={'loader'}>
+          <img className={'loaderImage'} src={require('../../media/loading.svg')} alt='loading' />
+          <p>No Internet Connection...</p>
+        </div>
+      )
+    }
+    
+
     return (
-      <div>
-        <p>Welcome to React Demo {this.props.posts} </p>
+      <div className={'loader'}>
+        <img className={'loaderImage'} src={require('../../media/loading.svg')} alt='loading' />
+        <p>Loading News...</p>
       </div>
     );
+
   }
 } 
 
 const mapStateToProps = (state) => {
   return {
-      posts: state.defaultReducer.msg
+      news: state.defaultReducer.news
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    decrement : () => {
-      dispatch(defaultAction())
+    fetchNews : () => {
+      dispatch(fetchNews())
     }
   }
 }
